@@ -5,7 +5,7 @@ from tasks.forms import TaskForm, ProccesTaskForm
 import sqlite3
 from datetime import date
 
-BASE_DATOS = './data/tasks.db'
+BASE_DATOS = './data/{}'.format(app.config['DB_FILE'])
 
 def dict_factory(cursor, row):
     d = {}
@@ -38,10 +38,11 @@ def index():
     if registros:
         if isinstance(registros, dict):
             registros = [registros]
-        else:
-            registros = []
+    else:
+        registros = []
 
     return render_template("index.html", registros=registros) 
+    
 
 @app.route("/newtask", methods=['GET', 'POST'])
 def newTask():
